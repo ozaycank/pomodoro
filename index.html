@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pomodoro</title>
+  <style>
+    body {
+      background: #1e1e1e;
+      color: white;
+      text-align: center;
+      font-family: Stencil Std, sans-serif;
+    }
+    h1 {
+      font-size: 48px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .start { background: #4CAF50; }
+    .pause { background: #f39c12; }
+    .reset { background: #e74c3c; }
+  </style>
+</head>
+<body>
+
+  <h1 id="timer">25:00</h1>
+
+  <button class="start" onclick="start()">Start</button>
+  <button class="pause" onclick="pause()">Pause</button>
+  <button class="reset" onclick="reset()">Reset</button>
+
+  <script>
+    let time = 25 * 60;
+    let interval;
+
+    function update() {
+      let min = Math.floor(time / 60);
+      let sec = time % 60;
+      document.getElementById("timer").innerText =
+        `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
+    function start() {
+      if (interval) return;
+      interval = setInterval(() => {
+        if (time > 0) {
+          time--;
+          update();
+        } else {
+          clearInterval(interval);
+          alert("Pomodoro Bitti!");
+        }
+      }, 1000);
+    }
+
+    function pause() {
+      clearInterval(interval);
+      interval = null;
+    }
+
+    function reset() {
+      pause();
+      time = 25 * 60;
+      update();
+    }
+
+    update();
+  </script>
+
+</body>
+</html>
